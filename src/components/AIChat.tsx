@@ -11,7 +11,7 @@ interface Message {
   content: string;
   isUser: boolean;
   timestamp: Date;
-  chartData?: any;
+  chartData?: Record<string, unknown>;
 }
 
 interface AIChatProps {
@@ -74,6 +74,30 @@ export const AIChat = ({ className }: AIChatProps) => {
   };
 
   const generateAIResponse = (query: string) => {
+    const lowerQuery = query.toLowerCase();
+    
+    // More sophisticated response generation based on query content
+    if (lowerQuery.includes('revenue') || lowerQuery.includes('sales')) {
+      return 'Your revenue has increased by 15% this month. The SaaS segment shows strongest growth at 18%. Top drivers are subscription renewals and enterprise deals.';
+    }
+    
+    if (lowerQuery.includes('product') || lowerQuery.includes('performing')) {
+      return 'Top products: Premium SaaS Plan (32% revenue), Enterprise Solution (28%), Basic Plan (18%). Premium shows 25% higher conversion rates.';
+    }
+    
+    if (lowerQuery.includes('customer') || lowerQuery.includes('retention')) {
+      return 'Users engaging within 48 hours have 3x higher retention. Your 30-day retention is 78% (above average). Biggest drop-off at day 7.';
+    }
+    
+    if (lowerQuery.includes('marketing') || lowerQuery.includes('channel')) {
+      return 'Email campaigns have highest ROI at 340%, social media at 280%, paid search at 220%. Organic search drives 45% of traffic.';
+    }
+    
+    if (lowerQuery.includes('anomaly') || lowerQuery.includes('unusual')) {
+      return 'Found anomalies: 150% traffic spike Tuesday, mobile conversion dropped 22% last week, acquisition costs decreased 25% this week.';
+    }
+
+    // Default responses
     const responses = [
       'Based on your data, I can see interesting patterns. Your revenue has increased by 15% compared to last month, with the highest growth in the SaaS segment.',
       'I\'ve analyzed your customer data and found that retention rates are strongest among users who engage with your platform within the first 48 hours.',
@@ -90,7 +114,7 @@ export const AIChat = ({ className }: AIChatProps) => {
 
   return (
     <Card className={`flex flex-col h-full ${className}`}>
-      <CardHeader>
+      <CardHeader className="pb-4">
         <CardTitle className="flex items-center space-x-2">
           <MessageSquare className="h-5 w-5" />
           <span>AI Data Analyst</span>
@@ -100,8 +124,8 @@ export const AIChat = ({ className }: AIChatProps) => {
           </Badge>
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex-1 flex flex-col space-y-4">
-        <ScrollArea className="flex-1 h-96" ref={scrollAreaRef}>
+             <CardContent className="flex-1 flex flex-col space-y-3 pb-3">
+        <ScrollArea className="flex-1 max-h-32" ref={scrollAreaRef}>
           <div className="space-y-4 pr-4">
             {messages.map((message) => (
               <div
@@ -113,80 +137,80 @@ export const AIChat = ({ className }: AIChatProps) => {
                     message.isUser ? 'flex-row-reverse space-x-reverse' : ''
                   }`}
                 >
-                  <div className={`p-2 rounded-full ${
-                    message.isUser ? 'bg-primary' : 'bg-muted'
-                  }`}>
-                    {message.isUser ? (
-                      <User className="h-3 w-3 text-primary-foreground" />
-                    ) : (
-                      <Bot className="h-3 w-3 text-muted-foreground" />
-                    )}
-                  </div>
-                  <div
-                    className={`p-3 rounded-lg ${
-                      message.isUser
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-muted'
-                    }`}
-                  >
-                    <p className="text-sm">{message.content}</p>
-                    <span className="text-xs opacity-70 mt-1 block">
-                      {message.timestamp.toLocaleTimeString()}
-                    </span>
-                  </div>
+                                     <div className={`p-2 rounded-full ${
+                     message.isUser ? 'bg-primary' : 'bg-card border border-border'
+                   }`}>
+                     {message.isUser ? (
+                       <User className="h-3 w-3 text-primary-foreground" />
+                     ) : (
+                       <Bot className="h-3 w-3 text-muted-foreground" />
+                     )}
+                   </div>
+                                     <div
+                     className={`p-3 rounded-lg ${
+                       message.isUser
+                         ? 'bg-primary text-primary-foreground'
+                         : 'bg-card border border-border'
+                     }`}
+                   >
+                     <p className="text-sm">{message.content}</p>
+                     <span className="text-xs opacity-70 mt-1 block">
+                       {message.timestamp.toLocaleTimeString()}
+                     </span>
+                   </div>
                 </div>
               </div>
             ))}
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="flex items-start space-x-2">
-                  <div className="p-2 rounded-full bg-muted">
-                    <Bot className="h-3 w-3 text-muted-foreground" />
-                  </div>
-                  <div className="p-3 rounded-lg bg-muted">
-                    <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
+                         {isLoading && (
+               <div className="flex justify-start">
+                 <div className="flex items-start space-x-2">
+                   <div className="p-2 rounded-full bg-card border border-border">
+                     <Bot className="h-3 w-3 text-muted-foreground" />
+                   </div>
+                   <div className="p-3 rounded-lg bg-card border border-border">
+                     <div className="flex space-x-1">
+                       <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"></div>
+                       <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                       <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             )}
           </div>
         </ScrollArea>
 
-        {messages.length === 1 && (
-          <div className="space-y-2">
-            <p className="text-sm font-medium text-muted-foreground">Try asking:</p>
-            <div className="flex flex-wrap gap-2">
-              {suggestedQueries.slice(0, 3).map((query, index) => (
-                <Button
-                  key={index}
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleSuggestedQuery(query)}
-                  className="text-xs"
-                >
-                  {query}
-                </Button>
-              ))}
-            </div>
-          </div>
-        )}
+                 {messages.length === 1 && (
+           <div className="space-y-2 mt-2">
+             <p className="text-sm font-medium text-muted-foreground">Try asking:</p>
+             <div className="flex flex-wrap gap-1">
+               {suggestedQueries.slice(0, 2).map((query, index) => (
+                 <Button
+                   key={index}
+                   variant="outline"
+                   size="sm"
+                   onClick={() => handleSuggestedQuery(query)}
+                   className="text-xs hover:bg-muted/50 text-[10px] px-2 py-1"
+                 >
+                   {query}
+                 </Button>
+               ))}
+             </div>
+           </div>
+         )}
 
-        <form onSubmit={handleSubmit} className="flex space-x-2">
-          <Input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask me about your data..."
-            disabled={isLoading}
-            className="flex-1"
-          />
-          <Button type="submit" disabled={isLoading || !input.trim()}>
-            <Send className="h-4 w-4" />
-          </Button>
-        </form>
+                 <form onSubmit={handleSubmit} className="flex space-x-2 pt-1">
+           <Input
+             value={input}
+             onChange={(e) => setInput(e.target.value)}
+             placeholder="Ask me about your data..."
+             disabled={isLoading}
+             className="flex-1"
+           />
+           <Button type="submit" disabled={isLoading || !input.trim()} size="sm">
+             <Send className="h-4 w-4" />
+           </Button>
+         </form>
       </CardContent>
     </Card>
   );

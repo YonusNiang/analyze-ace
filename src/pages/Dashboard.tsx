@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { MetricCard } from '@/components/MetricCard';
 import { AIChat } from '@/components/AIChat';
@@ -28,6 +29,7 @@ interface Insight {
 
 const Dashboard = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [insights, setInsights] = useState<Insight[]>([]);
 
   useEffect(() => {
@@ -82,8 +84,8 @@ const Dashboard = () => {
   return (
     <div className="space-y-6">
       {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-primary/10 to-primary/5 p-6 rounded-lg border">
-        <h1 className="text-3xl font-bold mb-2">
+      <div className="bg-card p-6 rounded-lg border border-border">
+        <h1 className="text-3xl font-bold mb-2 text-foreground">
           Welcome back, {user?.email?.split('@')[0]}! 👋
         </h1>
         <p className="text-muted-foreground">
@@ -140,11 +142,11 @@ const Dashboard = () => {
         {/* Right Sidebar */}
         <div className="space-y-6">
           {/* AI Chat */}
-          <AIChat className="h-96" />
+          <AIChat className="h-56" />
           
           {/* Recent Insights */}
-          <Card>
-            <CardHeader>
+          <Card className="mt-12">
+            <CardHeader className="pb-4">
               <CardTitle className="flex items-center space-x-2">
                 <TrendingUp className="h-5 w-5" />
                 <span>Recent Insights</span>
@@ -153,7 +155,7 @@ const Dashboard = () => {
                 AI-generated insights from your data
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardContent className="space-y-3 pt-2">
               {insights.map((insight) => {
                 const InsightIcon = getInsightIcon(insight.type);
                 return (
@@ -165,12 +167,12 @@ const Dashboard = () => {
                       <InsightIcon className="h-4 w-4 text-muted-foreground" />
                     </div>
                     <div className="flex-1 space-y-1">
-                      <div className="flex items-center space-x-2">
-                        <h4 className="text-sm font-medium">{insight.title}</h4>
-                        <Badge variant={getSeverityColor(insight.severity) as any} className="text-xs">
-                          {insight.severity}
-                        </Badge>
-                      </div>
+                                           <div className="flex items-center space-x-2">
+                       <h4 className="text-sm font-medium text-foreground">{insight.title}</h4>
+                       <Badge variant={getSeverityColor(insight.severity) as "default" | "secondary" | "destructive" | "outline"} className="text-xs">
+                         {insight.severity}
+                       </Badge>
+                     </div>
                       <p className="text-xs text-muted-foreground">
                         {insight.description}
                       </p>
@@ -182,7 +184,11 @@ const Dashboard = () => {
                   </div>
                 );
               })}
-              <Button variant="outline" className="w-full text-sm">
+              <Button 
+                variant="outline" 
+                className="w-full text-sm"
+                onClick={() => navigate('/insights')}
+              >
                 View All Insights
               </Button>
             </CardContent>

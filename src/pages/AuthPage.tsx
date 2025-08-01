@@ -42,13 +42,13 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
         {/* Left side - Marketing content */}
         <div className="space-y-8 text-center lg:text-left">
           <div className="space-y-4">
-            <h1 className="text-4xl lg:text-6xl font-bold gradient-text">
-              Data Analytics as a Service
+            <h1 className="text-4xl lg:text-6xl font-bold text-foreground">
+              OTONOMY
             </h1>
             <p className="text-xl text-muted-foreground">
               Transform your business data into actionable insights with our AI-powered analytics platform
@@ -57,41 +57,41 @@ const AuthPage = () => {
           
           <div className="grid grid-cols-2 gap-6">
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-primary/10 rounded-lg">
+              <div className="p-2 bg-card rounded-lg">
                 <BarChart3 className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h3 className="font-semibold">Real-time Analytics</h3>
+                <h3 className="font-semibold text-foreground">Real-time Analytics</h3>
                 <p className="text-sm text-muted-foreground">Live insights from your data</p>
               </div>
             </div>
             
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-primary/10 rounded-lg">
+              <div className="p-2 bg-card rounded-lg">
                 <TrendingUp className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h3 className="font-semibold">AI Predictions</h3>
+                <h3 className="font-semibold text-foreground">AI Predictions</h3>
                 <p className="text-sm text-muted-foreground">Future trend analysis</p>
               </div>
             </div>
             
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-primary/10 rounded-lg">
+              <div className="p-2 bg-card rounded-lg">
                 <Users className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h3 className="font-semibold">Team Collaboration</h3>
+                <h3 className="font-semibold text-foreground">Team Collaboration</h3>
                 <p className="text-sm text-muted-foreground">Share insights easily</p>
               </div>
             </div>
             
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-primary/10 rounded-lg">
+              <div className="p-2 bg-card rounded-lg">
                 <Globe className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h3 className="font-semibold">Multiple Sources</h3>
+                <h3 className="font-semibold text-foreground">Multiple Sources</h3>
                 <p className="text-sm text-muted-foreground">Connect all your data</p>
               </div>
             </div>
@@ -99,43 +99,45 @@ const AuthPage = () => {
         </div>
 
         {/* Right side - Auth forms */}
-        <Card className="w-full max-w-md mx-auto glass-effect">
+        <Card className="w-full max-w-md mx-auto bg-card/80 backdrop-blur-sm border-border">
           <CardHeader className="text-center">
-            <CardTitle>Welcome to DaaS</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-foreground">Welcome to OTONOMY</CardTitle>
+            <CardDescription className="text-muted-foreground">
               Sign in to your account or create a new one
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="signin" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="signin">Sign In</TabsTrigger>
-                <TabsTrigger value="signup">Sign Up</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 bg-muted">
+                <TabsTrigger value="signin" className="text-foreground">Sign In</TabsTrigger>
+                <TabsTrigger value="signup" className="text-foreground">Sign Up</TabsTrigger>
               </TabsList>
               
               <TabsContent value="signin">
                 <form onSubmit={handleSignIn} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="signin-email">Email</Label>
+                    <Label htmlFor="signin-email" className="text-foreground">Email</Label>
                     <Input
                       id="signin-email"
                       name="email"
                       type="email"
                       placeholder="Enter your email"
                       required
+                      className="bg-card border-border text-foreground placeholder:text-muted-foreground"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signin-password">Password</Label>
+                    <Label htmlFor="signin-password" className="text-foreground">Password</Label>
                     <Input
                       id="signin-password"
                       name="password"
                       type="password"
                       placeholder="Enter your password"
                       required
+                      className="bg-card border-border text-foreground placeholder:text-muted-foreground"
                     />
                   </div>
-                  <Button type="submit" className="w-full" disabled={isLoading}>
+                  <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90" disabled={isLoading}>
                     {isLoading ? "Signing in..." : "Sign In"}
                   </Button>
                 </form>
@@ -144,36 +146,39 @@ const AuthPage = () => {
               <TabsContent value="signup">
                 <form onSubmit={handleSignUp} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="signup-business">Business Name</Label>
+                    <Label htmlFor="signup-business" className="text-foreground">Business Name</Label>
                     <Input
                       id="signup-business"
                       name="businessName"
                       type="text"
                       placeholder="Your business name"
                       required
+                      className="bg-card border-border text-foreground placeholder:text-muted-foreground"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signup-email">Email</Label>
+                    <Label htmlFor="signup-email" className="text-foreground">Email</Label>
                     <Input
                       id="signup-email"
                       name="email"
                       type="email"
                       placeholder="Enter your email"
                       required
+                      className="bg-card border-border text-foreground placeholder:text-muted-foreground"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signup-password">Password</Label>
+                    <Label htmlFor="signup-password" className="text-foreground">Password</Label>
                     <Input
                       id="signup-password"
                       name="password"
                       type="password"
                       placeholder="Create a password"
                       required
+                      className="bg-card border-border text-foreground placeholder:text-muted-foreground"
                     />
                   </div>
-                  <Button type="submit" className="w-full" disabled={isLoading}>
+                  <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90" disabled={isLoading}>
                     {isLoading ? "Creating account..." : "Create Account"}
                   </Button>
                 </form>

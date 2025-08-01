@@ -30,7 +30,7 @@ import { cn } from '@/lib/utils';
 
 interface NavItem {
   title: string;
-  icon: any;
+  icon: React.ComponentType<{ className?: string }>;
   href: string;
   badge?: string;
 }
@@ -105,7 +105,7 @@ export const DashboardLayout = () => {
                 <BarChart3 className="h-6 w-6 text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-xl font-bold">DaaS Platform</h1>
+                <h1 className="text-xl font-bold text-foreground">OTONOMY</h1>
                 <p className="text-xs text-muted-foreground">Analytics Suite</p>
               </div>
             </div>
@@ -162,11 +162,11 @@ export const DashboardLayout = () => {
               <DropdownMenuContent align="end" className="w-56">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => alert('Settings coming soon!')}>
                   <Settings className="h-4 w-4 mr-2" />
                   Settings
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => alert('Notifications coming soon!')}>
                   <Bell className="h-4 w-4 mr-2" />
                   Notifications
                 </DropdownMenuItem>
@@ -203,7 +203,7 @@ export const DashboardLayout = () => {
             </div>
 
             <div className="flex items-center space-x-2">
-              <Button variant="outline" size="icon">
+              <Button variant="outline" size="icon" onClick={() => alert('Notifications coming soon!')}>
                 <Bell className="h-4 w-4" />
               </Button>
             </div>

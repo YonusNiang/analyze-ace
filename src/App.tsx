@@ -8,6 +8,8 @@ import { DashboardLayout } from "@/components/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
 import AuthPage from "./pages/AuthPage";
 import NotFound from "./pages/NotFound";
+import InsightsPage from "./pages/InsightsPage";
+import AIChatPage from "./pages/AIChatPage";
 
 const queryClient = new QueryClient();
 
@@ -41,8 +43,8 @@ const App = () => (
             }>
               <Route index element={<Dashboard />} />
               <Route path="data-sources" element={<div>Data Sources Page</div>} />
-              <Route path="chat" element={<div>AI Chat Page</div>} />
-              <Route path="insights" element={<div>Insights Page</div>} />
+              <Route path="chat" element={<AIChatPage />} />
+              <Route path="insights" element={<InsightsPage />} />
               <Route path="reports" element={<div>Reports Page</div>} />
               <Route path="analytics" element={<div>Analytics Page</div>} />
             </Route>
