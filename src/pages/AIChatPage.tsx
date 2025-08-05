@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
 import { Send, MessageSquare, BarChart3, TrendingUp, Lightbulb, Bot, User, Download, Share2, Settings } from 'lucide-react';
 
 interface Message {
@@ -18,7 +20,7 @@ const AIChatPage = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      content: 'Hello! I\'m your AI data analyst. I can help you analyze your business data, create charts, and provide insights. What would you like to explore today?',
+      content: 'Hello! I\'m your AI data analyst. I can help you analyze your business data, create charts, and provide insights. I can only work with data from your connected sources - no made-up information. What would you like to explore today?',
       isUser: false,
       timestamp: new Date()
     }
@@ -26,6 +28,7 @@ const AIChatPage = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const { user } = useAuth();
 
   const suggestedQueries = [
     'Show me revenue trends for the last 6 months',
@@ -59,17 +62,39 @@ const AIChatPage = () => {
     setInput('');
     setIsLoading(true);
 
-    // Simulate AI response with more sophisticated logic
-    setTimeout(() => {
+    try {
+      // Call the real AI analyst edge function
+      const response = await supabase.functions.invoke('ai-analyst', {
+        body: {
+          message: input,
+          userId: user?.id
+        }
+      });
+
+      if (response.error) {
+        throw response.error;
+      }
+
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
-        content: generateAIResponse(input),
+        content: response.data.message || "I'm having trouble processing your request right now.",
         isUser: false,
         timestamp: new Date()
       };
+      
       setMessages(prev => [...prev, aiResponse]);
+    } catch (error) {
+      console.error('Error calling AI analyst:', error);
+      const errorResponse: Message = {
+        id: (Date.now() + 1).toString(),
+        content: "I'm having trouble connecting to the AI service right now. Please try again later.",
+        isUser: false,
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorResponse]);
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   const generateAIResponse = (query: string) => {

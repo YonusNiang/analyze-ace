@@ -10,6 +10,9 @@ import AuthPage from "./pages/AuthPage";
 import NotFound from "./pages/NotFound";
 import InsightsPage from "./pages/InsightsPage";
 import AIChatPage from "./pages/AIChatPage";
+import DataSourcesPage from "./pages/DataSourcesPage";
+import ReportsPage from "./pages/ReportsPage";
+import AnalyticsPage from "./pages/AnalyticsPage";
 
 const queryClient = new QueryClient();
 
@@ -42,11 +45,11 @@ const App = () => (
               </ProtectedRoute>
             }>
               <Route index element={<Dashboard />} />
-              <Route path="data-sources" element={<div>Data Sources Page</div>} />
+              <Route path="data-sources" element={<DataSourcesPage />} />
               <Route path="chat" element={<AIChatPage />} />
               <Route path="insights" element={<InsightsPage />} />
-              <Route path="reports" element={<div>Reports Page</div>} />
-              <Route path="analytics" element={<div>Analytics Page</div>} />
+              <Route path="reports" element={<ReportsPage />} />
+              <Route path="analytics" element={<AnalyticsPage />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
